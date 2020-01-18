@@ -1,21 +1,24 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
-class Produto extends MY_Controller{
+defined('BASEPATH') or exit('No direct script access allowed');
+class Produto extends MY_Controller
+{
     /**
      * Pega os dados de produtos cadastrados na base antes de mostrar a página
      */
-    function index(){
+    function index()
+    {
         $dados['produto'] = $this->pegaProdutos();
         // Passa os dados para a view
         $dados['titulo'] = 'Produto';
         $mensagem = $this->pegaDadoFlash('mensagem');
-        $this->carregaView('produto/lista_produto', $dados, $mensagem);
+        $this->carregaView('Produto/lista_produto', $dados, $mensagem);
     }
 
     /**
      * Método utilizado para pegar produtos
      */
-    function pegaProdutos(){
+    function pegaProdutos()
+    {
         $this->load->database();
         $this->load->model('ProdutoModelo');
         $this->load->library('session');
@@ -24,31 +27,34 @@ class Produto extends MY_Controller{
     /**
      * Método utilizado para abrir a view de cadastro de produto
      */
-    function novoProduto(){
+    function novoProduto()
+    {
         $this->load->database();
         $this->load->model('ProdutoModelo');
         $dados['produto'] = $this->ProdutoModelo;
         $dados['titulo'] = 'Formulário Produto';
-        $this->carregaView('produto/form_produto', $dados);
+        $this->carregaView('Produto/form_produto', $dados);
     }
 
     /**
      * Método utilizado para abrir a view de edição de produto
      * @param $idProduto: id do produto para busca
      */
-    function editarProduto($idProduto){
+    function editarProduto($idProduto)
+    {
         //Carrega modelo e a base
         $this->load->database();
         $this->load->model('ProdutoModelo');
         // Pega todos os dados do produto
         $dados['produto'] = $this->ProdutoModelo->buscarProduto($idProduto);
         $dados['titulo'] = 'Formulário Produto';
-        $this->carregaView('produto/form_produto', $dados);
+        $this->carregaView('Produto/form_produto', $dados);
     }
     /**
      * Método utilizado para cadastrar produtos
      */
-    function gravarProduto($idProduto = 0){
+    function gravarProduto($idProduto = 0)
+    {
         // Carrega a base de dados e o modelo, além da sessão para pegar o usuário
         $this->load->database();
         $this->load->model('ProdutoModelo');
@@ -56,7 +62,7 @@ class Produto extends MY_Controller{
 
 
         // Verifica se é um produto não existente, se não é, insere, se já existe, atualiza
-        if($idProduto == 0){
+        if ($idProduto == 0) {
             $dados = array(
                 'descricaoProduto' => $this->input->post('descricaoProduto'),
                 'valorProduto' => $this->input->post('valorProduto'),
@@ -71,28 +77,28 @@ class Produto extends MY_Controller{
             $dado['titulo'] = 'Produto';
             $dado['produto'] = $this->pegaProdutos();
             $this->retornaSucesso('Registro cadastrado com sucesso!');
-            redirect('produto');
+            redirect('Produto');
         } else {
             //Atualiza no banco
             $dados = array(
                 'descricaoProduto' => $this->input->post('descricaoProduto'),
                 'valorProduto' => $this->input->post('valorProduto'),
                 'quantidadeProduto' => $this->input->post('quantidadeProduto'),
-                );
+            );
             $this->ProdutoModelo->atualizar($dados, $idProduto);
             // Manda para a tela sucesso
             $dado['titulo'] = 'Produto';
             $dado['produto'] = $this->pegaProdutos();
             $this->retornaSucesso('Registro alterado com sucesso!');
-            redirect('produto');
+            redirect('Produto');
         }
-
     }
     /**
      * Método utilizado para deletar o produto
      * @param $idProduto: id do produto a se deletar
      */
-    function deletarProduto($idProduto = 0){
+    function deletarProduto($idProduto = 0)
+    {
         $this->load->database();
         $this->load->library('session');
         $this->load->model('ProdutoModelo');
@@ -101,6 +107,6 @@ class Produto extends MY_Controller{
         $dado['titulo'] = 'Produto';
         $dado['produto'] = $this->pegaProdutos();
         $this->retornaSucesso('Registro deletado com sucesso!');
-        redirect('produto');
+        redirect('Produto');
     }
 }

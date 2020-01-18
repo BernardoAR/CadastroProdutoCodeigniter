@@ -1,7 +1,9 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
-class BackupProduto extends MY_Controller{
-    function index(){
+defined('BASEPATH') or exit('No direct script access allowed');
+class BackupProduto extends MY_Controller
+{
+    function index()
+    {
         $this->load->database();
         $this->load->model('BackupProdutoModelo');
         $this->load->library('session');
@@ -9,6 +11,6 @@ class BackupProduto extends MY_Controller{
 
         // Passa os dados para a view
         $dados['titulo'] = 'Backup do Produto';
-        $this->carregaView('backupproduto/lista_backup_produto', $dados);
+        $this->carregaView('BackupProduto/lista_backup_produto', $dados);
     }
 }

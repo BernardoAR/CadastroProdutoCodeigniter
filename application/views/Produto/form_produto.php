@@ -2,7 +2,7 @@
     <div class="card mb-3">
         <div class="card-header">
             <?php
-            if ($produto->idProduto == null){
+            if ($produto->idProduto == null) {
                 echo "Cadastrar Produto";
             } else {
                 echo "Alterar Produto";
@@ -11,7 +11,7 @@
         </div>
         <div class="card-body">
             <div class="container">
-                <form method="POST" action="<?= site_url('produto/gravarProduto/'.$produto->idProduto)?>">
+                <form method="POST" action="<?= site_url('Produto/gravarProduto/' . $produto->idProduto) ?>">
                     <div class="form-group">
                         <div class="form-label-group">
                             <input type="text" class="form-control" id="descricaoProduto" name="descricaoProduto" placeholder="Descricao do Produto" value="<?= $produto->descricaoProduto ?>" required>
@@ -32,17 +32,17 @@
                     </div>
 
                     <button type="submit" class="btn btn-primary">
-                    <?php
+                        <?php
 
-                        if ($produto->idProduto == null){
+                        if ($produto->idProduto == null) {
                             echo "Cadastrar Produto";
                         } else {
                             echo "Alterar Produto";
                         }
-                    ?>
+                        ?>
                     </button>
                 </form>
             </div>
         </div>
     </div>
-<?= script_tag('assets/bootstrap/js/jquery.maskMoney.min.js');
+    <?= script_tag('assets/bootstrap/js/jquery.maskMoney.min.js');
