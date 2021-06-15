@@ -1,25 +1,22 @@
 <?php
-defined('BASEPATH') or exit('No direct script access allowed');
-class Usuario extends MY_Controller
-{
+defined('BASEPATH') OR exit('No direct script access allowed');
+class Usuario extends MY_Controller{
     /**
      * Método que carrega a view de dados do usuário
      */
-    function index()
-    {
+    function index(){
         // Dados do perfil do usuario, manda para a view
         $dados['dadosUsuario'] = $this->pegaDadosUsuario();
         $dados['titulo'] = 'Formulário de Usuário';
         $mensagem = $this->pegaDadoFlash('mensagem');
-        $this->carregaView('Usuario/form_usuario', $dados, $mensagem);
+        $this->carregaView('usuario/form_usuario', $dados, $mensagem);
     }
 
     /**
      * Método utilizado para retornar o dado do Usuário
      * @return mixed
      */
-    function pegaDadosUsuario()
-    {
+    function pegaDadosUsuario(){
         $this->load->database();
         $this->load->model('UsuarioModelo');
         return $this->UsuarioModelo->buscaUsuarioAtual($this->getID());
@@ -28,8 +25,7 @@ class Usuario extends MY_Controller
     /**
      * Método que possui as regras de entrada
      */
-    function regrasInput()
-    {
+    function regrasInput(){
         // Library de validação
         $this->load->library('form_validation');
 
@@ -42,8 +38,7 @@ class Usuario extends MY_Controller
     /**
      * Método utilizado para atualizar os dados do usuário no banco
      */
-    function atualizarUsuario()
-    {
+    function atualizarUsuario(){
         //Coloca as regras de entrada
         $this->regrasInput();
         // Carrega a base de dados e o modelo
@@ -52,10 +47,10 @@ class Usuario extends MY_Controller
 
 
         // Se a verificação retornar valor, atualiza os dados do usuário
-        if ($this->form_validation->run() == true) {
+        if($this->form_validation->run() == true){
             $novaSenha = $this->input->post('novaSenha');
             //Atualiza os Dados
-            if (!empty($novaSenha)) {
+            if(!empty($novaSenha)){
                 $dados = array(
                     'nomeCompletoUsuario' => $this->input->post('nomeCompletoUsuario'),
                     'nomeUsuario' => $this->input->post('nomeUsuario'),
@@ -76,21 +71,20 @@ class Usuario extends MY_Controller
             $dado['titulo'] = 'Início';
             $dado['usuario'] = $this->session;
             $this->retornaSucesso('Registros alterados com sucesso');
-            redirect('Sistema');
+            redirect('sistema');
         } else {
             $dado['usuario'] = $this->pegaDadosUsuario();
             $dado['titulo'] = 'Formulário de Usuário';
             $erros = validation_errors();
             $this->retornaErro($erros);
-            redirect('Usuario');
+            redirect('usuario');
         }
     }
 
     /**
      * Método utilizado para tualizar os dados da sessão
      */
-    function atualizaDadosSessao()
-    {
+    function atualizaDadosSessao(){
         // Pega os dados completos, mas só retorna os principais, na sessão
         $this->load->library('session');
         $dados = $this->pegaDadosUsuario();
@@ -102,17 +96,15 @@ class Usuario extends MY_Controller
     }
     /**
      * Método utilizado para a view de deletar conta do usuário
-     */
-    function excluirConta()
-    {
+    */
+    function excluirConta(){
         $dados['titulo'] = 'Deletar Conta';
-        $this->carregaView('Usuario/deletar_usuario', $dados);
+        $this->carregaView('usuario/deletar_usuario', $dados);
     }
     /**
      *  Método utilizado para deletar a conta
      */
-    function deletarUsuario()
-    {
+    function deletarUsuario(){
         // Library de validação
         $this->load->library('form_validation');
         //Validação de formulário
@@ -123,17 +115,19 @@ class Usuario extends MY_Controller
         $this->load->model('UsuarioModelo');
 
         // Se a verificação retornar valor, deleta o usuário
-        if ($this->form_validation->run() == true) {
+        if($this->form_validation->run() == true){
             $this->session->sess_destroy();
             $this->UsuarioModelo->deletar($this->getID());
-            redirect('Login');
+            redirect('login');
         } else {
             $dado['usuario'] = $this->pegaDadosUsuario();
             $dado['titulo'] = 'Deletar Conta';
             $erros = validation_errors();
             $this->retornaErro($erros);
-            redirect('Usuario');
+            redirect('usuario');
+
         }
+
     }
 
     /**
@@ -141,11 +135,10 @@ class Usuario extends MY_Controller
      * @param $nomeUsuario: nome para verificação
      * @return bool
      */
-    function validarNomeUsuario($nomeUsuario)
-    {
+    function validarNomeUsuario($nomeUsuario){
         // Pega o retorno
         $nomeUsuarioExistente = $this->UsuarioModelo->nomeUsuarioExistente($nomeUsuario, $this->getID());
-        if ($nomeUsuarioExistente) {
+        if($nomeUsuarioExistente){
             $this->form_validation->set_message('validarNomeUsuario', 'Nome de usuário já existente!');
             return false;
         } else {
@@ -158,13 +151,12 @@ class Usuario extends MY_Controller
      * @param $email: email para verificação
      * @return bool
      */
-    function validarEmail($email)
-    {
+    function validarEmail($email){
         // Pega o retorno
         $emailExistente = $this->UsuarioModelo->emailExistente($email, $this->getID());
 
         // Mandar mensagem para a tela, sobre o erro ocorrido
-        if ($emailExistente) {
+        if($emailExistente){
             $this->form_validation->set_message('validarEmail', 'Endereço de email já existente!');
             return false;
         } else {
@@ -178,13 +170,12 @@ class Usuario extends MY_Controller
      * @param $senha: senha atual para verificação
      * @return bool
      */
-    function validarSenha($senha)
-    {
+    function validarSenha($senha){
         // Pega o retorno
         $senhaIncorreta = $this->UsuarioModelo->verificaSenha($senha, $this->getID());
 
         // Mandar mensagem para a tela, sobre o erro ocorrido
-        if ($senhaIncorreta) {
+        if($senhaIncorreta){
             $this->form_validation->set_message('validarSenha', 'Senha atual incorreta!');
             return false;
         } else {

@@ -4,16 +4,15 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class Login extends CI_Controller
 {
     function index()
-    {
-        // Controle de sites no login
+    {        // Controle de sites no login
         $this->load->library('session');
         if ($this->session->logado) {
-            redirect('Sistema');
+            redirect('sistema');
         } else {
             //Carrega o template junto da view
             $dados['titulo'] = 'Login';
             $mensagem = $this->pegaDadoFlash('mensagem');
-            $this->carregaView('Login/form_login', $dados, $mensagem);
+            $this->carregaView('login/form_login', $dados, $mensagem);
         }
     }
 
@@ -25,10 +24,10 @@ class Login extends CI_Controller
      */
     public function carregaView($view, $dados = 0, $retorno = "")
     {
-        $this->load->view('Template/cabecalho_login', $dados);
+        $this->load->view('template/cabecalho_login', $dados);
         echo $retorno;
         $this->load->view($view);
-        $this->load->view('Template/rodape_login');
+        $this->load->view('template/rodape_login');
     }
     /**
      * Carrega página de cadastro
@@ -36,7 +35,7 @@ class Login extends CI_Controller
     function novoUsuario()
     {
         $dados['titulo'] = 'Cadastro';
-        $this->carregaView('Login/form_cadastro', $dados);
+        $this->carregaView('login/form_cadastro', $dados);
     }
 
     /**
@@ -66,10 +65,10 @@ class Login extends CI_Controller
             );
             $this->session->set_userdata($dados);
             //Tela inicial do sistema
-            redirect('Sistema');
+            redirect('sistema');
         } else {
             $this->retornaErro('Login falhou, Email ou Senha incorretos!');
-            redirect('Login');
+            redirect('login');
         }
     }
 
@@ -114,11 +113,11 @@ class Login extends CI_Controller
 
             // Redirecionar para login
             $this->retornaSucesso('Cadastro efetuado com sucesso!');
-            redirect('Login');
+            redirect('login');
         } else {
             $erros = validation_errors();
             $this->retornaErro($erros);
-            redirect('Login');
+            redirect('login');
         }
     }
     /**

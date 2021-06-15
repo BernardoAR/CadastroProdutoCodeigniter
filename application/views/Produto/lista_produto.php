@@ -14,32 +14,19 @@
                         <th></th>
                     </tr>
                 </thead>
-                <tfoot>
-                    <tr>
-                        <th>ID</th>
-                        <th>Descrição</th>
-                        <th>Valor</th>
-                        <th>Quantidade</th>
-                        <th>Data de Cadastro</th>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                </tfoot>
                 <tbody>
                     <?php
-                    foreach ($produto->result() as $prod) {
-                        $html = "<tr>";
-                        $html .= "<td>" . $prod->idProduto . "</td>";
-                        $html .= "<td>" . $prod->descricaoProduto . "</td>";
-                        $html .= "<td>R$ " . $prod->valorProduto . "</td>";
-                        $html .= "<td>" . $prod->quantidadeProduto . "</td>";
-                        $html .= "<td>" . date("d-m-Y", strtotime($prod->dataCadastro)) . "</td>";
-                        $html .= "<td><a href='" . site_url('Produto/editarProduto/' . $prod->idProduto) . "'><i class=\"fas fa-edit\"></i></a>";
-                        $html .= "<td><a href='" . site_url('Produto/deletarProduto/' . $prod->idProduto) . "'><i class=\"fas fa-times\"></i></a>";
-                        $html .= "</tr>";
-                        echo $html;
-                    }
-                    ?>
+                    foreach ($produto->result() as $prod) : ?>
+                        <tr>
+                            <td><?= $prod->idProduto ?></td>
+                            <td><?= $prod->descricaoProduto ?></td>
+                            <td><?= $prod->valorProduto ?></td>
+                            <td><?= $prod->quantidadeProduto ?></td>
+                            <td><?= date("d-m-Y", strtotime($prod->dataCadastro)) ?></td>
+                            <td><a href="<?= site_url('produto/editarProduto/' . $prod->idProduto) ?>"><i class="fas fa-edit"></i></a></td>
+                            <td><a href="<?= site_url('produto/deletarProduto/' . $prod->idProduto) ?>"><i class="fas fa-times"></i></a></td>
+                        </tr>
+                    <?php endforeach; ?>
                 </tbody>
             </table>
         </div>

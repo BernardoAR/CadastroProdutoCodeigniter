@@ -32,6 +32,18 @@ CREATE TABLE IF NOT EXISTS BackupProduto(
     dataExclusao DATE,
     PRIMARY KEY (idBackupProduto)
 );
+CREATE TABLE `backupproduto` (
+  `idBackupProduto` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `descricaoProduto` varchar(45) NOT NULL,
+  `valorProduto` decimal(7,2) NOT NULL,
+  `quantidadeProduto` int(11) NOT NULL,
+  `dataCadastro` date NOT NULL,
+  `dataAtualizacao` date NOT NULL,
+  `dataExclusao` date NOT NULL,
+  `idUsuario` int(10) unsigned NOT NULL,
+  `idProduto` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`idBackupProduto`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8
 -- FKs BackupProduto
 ALTER TABLE BackupProduto
 ADD CONSTRAINT fk_BackupProduto_idUsuario FOREIGN KEY (idUsuario) REFERENCES Usuario(idUsuario) ON DELETE SET NULL ON UPDATE CASCADE;
@@ -40,9 +52,6 @@ ADD CONSTRAINT fk_BackupProduto_idProduto FOREIGN KEY (idProduto) REFERENCES Pro
 ALTER TABLE Produto
 ADD CONSTRAINT fk_Produto_idUsuario FOREIGN KEY (idUsuario) REFERENCES Usuario(idUsuario) ON DELETE CASCADE ON UPDATE CASCADE;
 
--- Inserir usuário prévio
-INSERT INTO Usuario
-VALUES (NULL, 'sgt', 'SGT - Gestão & Tecnologia ', 'suporte@sgtgestaoetecnologia.com.br', 'b81b9b1a51870667c8b9019d16c46251e0058774f3b41c724ee17748c3752039936c245214a70b1f57dcf7e56a8c17230e162ccc26546e24b63ac9b9c9d47358Q+cHqBX6VE7WaxOSVqFjXfu/ONEQS0fbba3XwlC8YGY=');
 
 -- TRIGGERS
 DELIMITER $$

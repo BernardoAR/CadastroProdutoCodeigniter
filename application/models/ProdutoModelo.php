@@ -1,6 +1,5 @@
 <?php
-class ProdutoModelo extends CI_Model
-{
+class ProdutoModelo extends CI_Model{
     public $idProduto;
     public $imagemProduto;
     public $descricaoProduto;
@@ -12,9 +11,8 @@ class ProdutoModelo extends CI_Model
     /**
      * Método utilizado para inserir no banco um novo usuário
      */
-    function inserir($dados)
-    {
-        $this->db->insert('Produto', $dados);
+    function inserir($dados){
+        $this->db->insert('produto', $dados);
     }
 
     /**
@@ -22,36 +20,32 @@ class ProdutoModelo extends CI_Model
      * @param $dados: dados para atualização
      * @param $idProduto: id do produto a alterar
      */
-    function atualizar($dados, $idProduto)
-    {
+    function atualizar($dados, $idProduto){
         $this->db->where('idProduto', $idProduto);
-        $this->db->update('Produto', $dados);
+        $this->db->update('produto', $dados);
     }
     /**
      * Método utilizado para deletar dados de um determinado produto
      * @param $idProduto: id do produto a deletar
      */
-    function deletar($idProduto)
-    {
+    function deletar($idProduto){
         $this->db->where('idProduto', $idProduto);
-        $this->db->delete('Produto');
+        $this->db->delete('produto');
     }
     /**
      * Método utilizado para buscar produtos no bancos, referente ao usuário
      */
-    function buscarProdutos($idUsuario)
-    {
+    function buscarProdutos($idUsuario){
         $this->db->where('idUsuario', $idUsuario);
-        return $this->db->get('Produto');
+        return $this->db->get('produto');
     }
 
     /**
      * Método utilizado para buscar um único produto, utilizado para edição
      * @param $idProduto: id do produto em questão
      */
-    function buscarProduto($idProduto)
-    {
+    function buscarProduto($idProduto){
         $this->db->where('idProduto', $idProduto);
-        return $this->db->get('Produto')->row();
+        return $this->db->get('produto')->row();
     }
 }
